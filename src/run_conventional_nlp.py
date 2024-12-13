@@ -12,19 +12,17 @@ def ipynb_to_code(filename: str) -> str:
 
 
 
-
-
 ''' 
     Process datasets
 '''
-'''
+
 source_code = ipynb_to_code("Process_dataset.ipynb")
 
 
 for data_name in ["LIAR", "ISOT", "WELFAKE"]:
     context = {'argv' : data_name}
     exec(source_code, context)
-'''
+
 
 '''
     Run classifier models on processed datasets
@@ -32,3 +30,7 @@ for data_name in ["LIAR", "ISOT", "WELFAKE"]:
 for i in os.listdir(r"fake_news_classifiers/"):
     code = ipynb_to_code(i)
     exec(i)
+
+
+nbconvert==7.16.4
+nbformat==5.10.4
