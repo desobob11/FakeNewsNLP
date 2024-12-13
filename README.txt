@@ -1,3 +1,6 @@
+
+
+
 ============================================
 Data
 ============================================
@@ -12,6 +15,9 @@ Data
 	- once classifier models have run, results files end up here (xlsx)
 
 
+
+
+
 ============================================
 Scripts
 ============================================
@@ -19,7 +25,9 @@ Scripts
 -- Found in the src/ directory
 
 -- src/Process_dataset.py
-	--
+	-- Processes a single fake news dataset (ISOT, LIAR, or WELFAKE)
+	-- Variable 'argv' must be set to one of [ISOT, LIAR, WELFAKE) if running solo
+	-- this script is run once for each dataset when executing run_conventional_nlp.py
 
 -- src/run_conventional_nlp.py
 	-- runs all Jupyter notebooks that process fake new datasets and perform classification models
@@ -36,3 +44,10 @@ Scripts
 -- src/sentiment_classifier/
 	-- two Jupyer notebooks that perform sentiment classification models on TWEETS and IMDB datasets
 
+
+============================================
+Python Packages
+============================================
+-- requirements.txt is a pip compatible list of required Python packages
+-- use pip to install these requirements
+--	https://docs.python.org/3/installing/index.html
