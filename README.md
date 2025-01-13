@@ -33,6 +33,7 @@ This project compares conventional NLP techniques (text preprocessing, manual le
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+[Research Paper](./Comparisons%20of%20LLM%20and%20Conventional%20NLP%20Techniques%20Fake%20News%20Detection.pdf)
 
 
 ## Data
