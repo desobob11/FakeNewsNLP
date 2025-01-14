@@ -1,0 +1,82 @@
+\documentclass[twocolumn,10pt]{article}
+\usepackage[margin=0.75in]{geometry} 
+\usepackage{times} 
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\title{Comparisons of LLM and Conventional NLP Techniques in the Detection of Fake News}
+\author{CPSC 571 Term Project Progress Report \\ Group 5 \\ Desmond O’Brien, Isaac Wong, Kofi Frempong}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+We should give a general explanation of fake news detection here. Take a labelled dataset, try to build an effective classification model that can reliably categorize news articles as real or fake, given a labelled dataset.
+
+\section{NLP-Based Techniques in the Literature}
+Traditional sentiment analysis and natural language processing approaches to fake news detection can be described as ‘content-level’ approaches \cite{1}. These methods work by analyzing the natural language contents of fake news articles. Content such as an article’s title, publishing agency, article content, and applicable ‘tags’ can all be considered content-level features of news articles \cite{1}. The traditional approach to fake news detection using natural language processing involves a specific process designed to extract features from a given fake news dataset.
+
+After acquiring a dataset of labelled fake and real news articles, the first step in any analysis is pre-processing the data. Common pre-processing steps include tokenization (converting a body of text into a discrete set of English words), omitting words that produce little predictive information (stopword) and lemmatization or stemming \cite{1}. Lemmatization is the process of converting individual words (tokens) into a common base-form. For example, after lemmatization, the token ‘changes’ becomes ‘change’ \cite{2}. Stemming, though similar to lemmatization, is a slightly different technique. Stemming involves taking a token and removing prefixes and/or suffixes. After stemming, for example, tokens such as ‘computing’, ‘computed' become ‘comput’ \cite{2}. The purpose of stemming and lemmatization is to take a body of text, also known as a corpus, and reduce it to a smaller subset of individual tokens. This reduces unnecessary information in the dataset and increases the runtime required for feature extraction \cite{2}.
+
+Once pre-processing of a fake news dataset has completed, the next step of the analysis is feature extraction \cite{1}. The goal of feature extraction is to mine useful information from a dataset. Useful information includes any characteristics of the dataset that can enhance the accuracy of a classification model \cite{2}. Perhaps the most common form of feature extraction that is used in fake news detection is TF-IDF (Term Frequency-Inverse Document Frequency) \cite{1,2}. This process involves determining a set of words in a corpus (the entire set of text in a dataset) that have the most significance across all documents \cite{1}. 
+
+\subsection{Term Frequency-Inverse Document Frequency (TF-IDF)}
+Term Frequency (TF) is a document (article) specific measure in a dataset; it is the number of times a specific word appears in an article, divided by the total number of words in the same article \cite{2}. The Inverse Document Frequency (IDF) represents the significance of a specific word across all articles in the dataset. For each word in a dataset, its TF-IDF score can be calculated by multiplying its TF by its IDF. Terms that are frequent in a given document but are infrequent across the full corpus are assigned higher scores \cite{2}. If a specific word exhibits a strong TF-IDF score, and appears almost entirely in fake articles, for example, then finding such a word in an unlabelled dataset would be a strong indication that the article is fake news.
+
+TF-IDF is a very prevalent technique in fake news detection using sentiment-analysis-based approaches. Researchers have applied the technique in fake news classification studies on both ISOT and LIAR datasets \cite{3,4}. Though the results from the literature showed favorable fake news detection results on the ISOT dataset using TF-IDF extraction \cite{3}, the results on the LIAR dataset \cite{4} were less promising. When applying TF-IDF as the only form of feature extraction on the LIAR dataset, the accuracies of fake news classification models in the literature were only marginally better than random guessing \cite{4}. This poor performance of TF-IDF features on fake news classification against the LIAR dataset inspired us to explore different feature extraction approaches for our fake news detection models.
+
+\section{Our Approach to NLP-Based Fake News Detection}
+We propose the inclusion of a new set of features for a fake news classification model: the subjectivities and polarities of content-level information of news articles in a dataset. Polarity is a measure of the sentiment of a statement or body of text. A high polarity represents a positive sentiment, while a low polarity represents a negative sentiment. The subjectivity of a text reflects how personal the assertion of facts within a text is. A subjective body of text will reflect personal opinions and knowledge, while an object article will assert its information is indisputably factual. To aid in extracting these features from natural language datasets, we found two Python libraries: TextBlob \cite{5} and VADER \cite{6}.
+
+\subsection{TextBlob}
+TextBlob \cite{5} is a popular Python library designed for natural language processing tasks. Built on top of the powerful Natural Language Toolkit (NLTK) \cite{7} and Pattern libraries, TextBlob employs a pre-trained, lexicon-based approach to analyze the sentiment of a given text. It uses predefined word sentiment scores to classify text as positive, negative, or neutral. For example, positive words (like "great") have positive polarity scores, while negative words (like "terrible") have negative polarity scores \cite{5}. TextBlob's sentiment analysis provides a polarity, which is a continuous score in the range of [-1, 1]. A score of -1 indicates a strongly negative sentiment, while 1 indicates a strongly positive sentiment. Scores near 0 reflect neutral sentiment \cite{5}.
+
+\subsection{VADER}
+2.2 VADER \cite{6} (Valence Aware Dictionary and Sentiment Reasoner) is a Python library tailored for sentiment analysis, particularly in informal and social media contexts. Like TextBlob, VADER uses a lexicon-based approach with a curated dictionary of over 7,500 words, phrases, and idioms, each assigned a sentiment score. Positive words (e.g., "amazing") have positive scores, while negative words (e.g., "horrible") have negative scores. It also accounts for linguistic nuances such as capitalization, punctuation, and modifiers (e.g., "very"). VADER generates three sentiment scores—negativity, positivity, and neutrality—each ranging from 0 to 1, with their sum always equaling 1. For example, a text might yield 0.33 positivity, 0.33 negativity, and 0.33 neutrality, indicating balanced sentiment \cite{6}.
+
+\subsection{Sentiment Classification}
+Before applying polarity and subjectivity features to fake news classification, we first had to ensure that these features exhibited accurate classifications on textual data. To do this, we found two datasets used for sentiment analysis classification. By performing polarity feature extraction on these datasets and training a sentiment classifier model, we could examine the test prediction accuracy that TextBlob and VADER’s polarity features produced.
+
+The first dataset we used to test a sentiment classification model is called the ‘Large Movie Review Dataset’ \cite{8} (IMDB). The dataset  is a repository of 50,000 IMDb user-provided reviews for movies and television productions. The dataset provides binary categorization, with each movie review being labelled as positive (1) or negative (0). 
+
+The second dataset we sourced for our sentiment classification analysis is titled ‘Social Media Sentiments Analysis Dataset’ \cite{9} (TWEETS). The dataset consists of 732 short tweets with corresponding sentiment labels. This dataset uses multi-class categorization, with three possible labels for a record: positive (2), neutral (1), and negative (0). We employed our soft-ensemble of models against each dataset, extracting TextBlob and VADER polarity soles as the sole features for the model. The test prediction accuracy of our sentiment classifiers can be seen in the figure below.
+
+Using polarity features alone, our soft-ensemble model reached roughly 75\% on each dataset. These accuracies indicate that the polarity features extracted from a text, using TextBlob and VADER, do provide a degree of predictive strength for sentiment classification. We also tested the use of IF-IDF feature extraction using Sci-Kit Learn’s \cite{10} vectorizer implementation. Using TF-IDF feature extraction instead, the test accuracies of our models rose to nearly 82\%. By combining both polarity and TF-IDF in our sentiment classifier, we achieved our highest test accuracies of just over 84\%. These results show that employing both polarity and TF-IDF feature extraction to our fake news classification models would likely provide the strongest level of classification accuracy.
+
+\subsection{Analyzing the Polarity of  Fake News Datasets}
+We began our fake news detection analysis by first examining each dataset. We were initially keen on examining the distribution of real and fake polarity scores across each dataset. The results can be seen in Figures 1, 2, and 3 below.
+
+The sentiment scores across all three datasets are largely neutral, usually hovering around 25\% positive or negative according to the TextBlob scores. The VADER scores are more restricted, with the average sentiment score of both news article content and titles lying around 80\% neutral. It should be noted that the LIAR dataset exhibits a significantly larger variance in sentiment scores as opposed to the ISOT and WELFAKE datasets. The polarity distributions of real and fake articles are largely consistent within each dataset. The clear exception to this is the ISOT dataset, in which the titles of real news articles are overwhelmingly neutral, while fake articles vary from 50\% negative to 50\% positive; this is according to the polarity scores extracted via TextBlob.
+
+Judging from these distributions, it is clear that the performance of polarity features in fake news classification may be relatively weaker against the LIAR dataset. The significantly higher level of variation in polarity across news articles is likely to result in a weaker fitting of our model to the dataset. The variation across the WELFAKE and ISOT datasets is largely consistent, but the tight distribution of sentiment scores extracted from news titles in the ISOT dataset may indicate the potential for stronger classification accuracy against the latter.
+
+\subsection{Analyzing the TF-IDF Features of Each Dataset}
+An indication of the effectiveness of TF-IDF features within each dataset would be the clear relevance of different words across real and fake news articles. For a quick visual of the most significant words across each dataset, we employed the Python WordCloud \cite{11} library. Using the library, we were able to generate the following word clouds for each dataset, with the most significant words, according to TF-IDF feature extraction.
+
+With both the ISOT and WELFAKE datasets containing news articles sourced from the USA’s 2016 presidential election cycle, it is no surprise that the name ‘Trump’ is hugely significant within both datasets. With that being said, we can see that the ISOT and WELFAKE datasets both contain words that are largely significant exclusively in either real or fake news articles. In the ISOT dataset, the word ‘said’ is significant in real articles, while the words ‘video’ and ‘obama’ are significant in fake articles This suggests that TF-IDF features will provide strong predictive power in detecting fake news in the ISOT dataset. The WELFAKE exhibits this same phenomenon, though interestingly, the words ‘video’ and ‘said’ have the opposite correlation with real and fake news as compared to ISOT.
+
+The comparison of significant words within the LIAR dataset provides far less indication of differences between real and fake news articles based on TF-IDF features. Both real and fake news articles in the LIAR dataset contain a remarkably similar set of significant words. Words such as ‘state’, ‘says’, ‘percent’, and ‘people’, are significant in both the real and fake subsets. Some words, such as ‘obama’ show significance in one subset and not the other. The results of this analysis indicate that our TF-IDF features are likely to show efficacy in detecting fake news within the LIAR and ISOT datasets, but may be relatively weaker when applied to the LIAR dataset.
+
+
+
+\bibliographystyle{plain}
+\begin{thebibliography}{9}
+\bibitem{1} I. Ali, et al., “Fake news detection techniques on social media: A survey,” Wireless Communications and Mobile Computing, vol. 2022, pp. 1–17, Aug. 2022. doi:10.1155/2022/6072084
+\bibitem{2} A. H. Almarashy, M.-R. Feizi-Derakhshi, and P. Salehpour, “Enhancing fake news detection by multi-feature classification,” IEEE Access, vol. 11, pp. 139601–139613, 2023. doi:10.1109/access.2023.3339621
+\bibitem{3} S. V. Balshetwar, A. RS, and D. J. R, “Fake news detection in social media based on sentiment analysis using classifier techniques,” Multimedia Tools and Applications, vol. 82, no. 23, pp. 35781–35811, Mar. 2023. doi:10.1007/s11042-023-14883-3
+\bibitem{4} B. Bhutani, N. Rastogi, P. Sehgal, and A. Purwar, “Fake news detection using sentiment analysis,” 2019 Twelfth International Conference on Contemporary Computing (IC3), Aug. 2019. doi:10.1109/ic3.2019.8844880
+\bibitem{5} S. Loria, “TextBlob,” TextBlob, A Python Package. 2014
+\bibitem{6} Hutto, C.J. \& Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. Eighth International Conference on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014
+\bibitem{7} S. Bird, E. Loper, "NLTK: The Natural Language Toolkit," in Proceedings of the ACL Interactive Poster and Demonstration Sessions, 2004, pp. 214–217.
+\bibitem{8} Maas, A., et al, "Learning Word Vectors for Sentiment Analysis," in Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies, 2011, pp. 142–150.
+\bibitem{9} https://www.kaggle.com/datasets/kashishparmar02/social-media-sentiments-analysis-dataset/data
+\bibitem{10} Scikit-learn: Machine Learning in Python, Pedregosa et al., JMLR 12, pp. 2825-2830, 2011.
+\bibitem{11} Amueller, “Amueller/word\_cloud: A little word cloud generator in python,” GitHub, https://github.com/amueller/wor\_cloud (accessed Nov. 30, 2024).
+\end{thebibliography}
+
+\end{document}
