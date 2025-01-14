@@ -10,7 +10,7 @@
   <a href="https://github.com/desobob11/SDLDoom">
   </a>
 
-  <h3 align="center">Conventional NLP vs LLM Techniques for Fake News Detection</h3>
+  <h3 align="center">Conventional NLP vs LLM Techniques for Fake News Detection :speech_balloon: :x: :newspaper:</h3>
 
 </div>
 
