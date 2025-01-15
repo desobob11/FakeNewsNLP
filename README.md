@@ -24,6 +24,10 @@ This paper compares conventional NLP feature extraction against LLM embeddings i
 ![NLP and LLM Techniques in Fake News Detection](https://github.com/user-attachments/assets/7025bcef-983c-45b8-bbe2-cea948a1b854)
 
 
+## Full Paper
+[Comparisons of LLM and Conventional NLP Techniques in the
+Detection of Fake News](./Comparisons%20of%20LLM%20and%20Conventional%20NLP%20Techniques%20Fake%20News%20Detection.pdf)
+
 
 
 ### Built With
@@ -35,11 +39,6 @@ This paper compares conventional NLP feature extraction against LLM embeddings i
   ![LaTeX](https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Research Paper
-[Comparisons of LLM and Conventional NLP Techniques in the
-Detection of Fake News](./Comparisons%20of%20LLM%20and%20Conventional%20NLP%20Techniques%20Fake%20News%20Detection.pdf)
-
 
 ## Data
 
