@@ -14,6 +14,7 @@
 
 </div>
 
+![NLP and LLM Techniques in Fake News Detection](https://github.com/user-attachments/assets/7025bcef-983c-45b8-bbe2-cea948a1b854)
 
 
 
