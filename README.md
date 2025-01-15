@@ -20,7 +20,7 @@
 
 ## About The Project
 
-This paper compares conventional NLP techniques (text preprocessing, manual lemmatization, polarity and sentiment calculations) against LLM embeddings, the detection of fake news articles.
+This paper compares conventional NLP feature extraction against LLM embeddings in the detection of fake news articles.
 
 ### Built With
 
