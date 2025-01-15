@@ -14,14 +14,17 @@
 
 </div>
 
-![NLP and LLM Techniques in Fake News Detection](https://github.com/user-attachments/assets/7025bcef-983c-45b8-bbe2-cea948a1b854)
-
 
 
 
 ## About The Project
 
 This paper compares conventional NLP feature extraction against LLM embeddings in the detection of fake news articles.
+
+![NLP and LLM Techniques in Fake News Detection](https://github.com/user-attachments/assets/7025bcef-983c-45b8-bbe2-cea948a1b854)
+
+
+
 
 ### Built With
 
